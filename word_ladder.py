@@ -1,6 +1,6 @@
 import re
 
-#This function does the same job as the regular input() function, however it also checks for actual input length and for the presence of letters or numbers (if specified)
+#This function does the same job as the regular input() function, however it also checks for actual input length and for the presence of letters or numbers (if specified). If the input does not match the requirements, the prompt is looped until it does.
 def inputCheck(prompt="",check=True):
     text = None
     while True:
@@ -14,7 +14,7 @@ def inputCheck(prompt="",check=True):
         break
     return text
 
-#This function removes all words from the blacklist file from the word list (if they appear in it)
+#TThis function takes two lists. It iterates over each item of the first list and if that item occurs in the second list, it is removed from the second list.
 def removeBlacklistedWords(blacklist, lines):
   for word in blacklist:
     if word in lines:
@@ -22,12 +22,12 @@ def removeBlacklistedWords(blacklist, lines):
   return lines
 
 
-#This function generates a list of all characters appearing in the string given to it and the end string specified by the user. It returns the length of this list (ie. the number of values that are the same in each list)
+#This function takes two strings. It generates a list of all the individual characters that occur in the same position in each string. It then returns the length of that list. Thus it compares the similarity between the current step in the word ladder and the final target.
 def same(item, target):
   return len([c for (c, t) in zip(item, target) if c == t])
 
 
-#Generates a list of words from the dictionary where every letter matches except ".". This character is a wildcard added into a word by the loop that this is called from in thee find function.
+#This function generates a list of words from the dictionary matching a pattern given to it in the form of a string. A ‘.’ character is used to denote a wild card (meaning it can be any character).
 def build(pattern, words, seen, list):
   return [word for word in words
                  if re.search(pattern, word) and word not in seen.keys() and
