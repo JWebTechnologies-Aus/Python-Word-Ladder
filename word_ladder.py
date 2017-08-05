@@ -14,6 +14,23 @@ def inputCheck(prompt="",check=True):
         break
     return text
 
+#This function gets input for a file name/path, iterates through all the lines in the file and appends them to a list. The list is then returned. All relevant error handling is done within this function.
+def getListFromFile():
+  try:
+    file = open(inputCheck("Enter dictionary name: ", check=False))
+  except:
+    print("Error, dictionary file does not exist.")
+    exit(0)
+  lines = file.readlines()
+  for line in range(len(lines)):  # This strips the lines and removes any empty lines from the list
+    lines[line] = lines[line].strip()
+    if lines[line] == "":
+      lines.pop(line)
+  if len(lines) == 0:  # Closes the program if the file is empty.
+    print("Error, file is empty.")
+    exit(0)
+  return lines
+
 #TThis function takes two lists. It iterates over each item of the first list and if that item occurs in the second list, it is removed from the second list.
 def removeBlacklistedWords(blacklist, lines):
   for word in blacklist:
@@ -61,19 +78,7 @@ def find(word, words, seen, target, path):
 
 
 #Open and read file. All words are on a separate line, ie. each line is a single word. Hence the variable 'lines' will contain a list of single words ending in '\n'.
-try:
-  file = open(inputCheck("Enter dictionary name: ",check=False))
-except:
-  print("Error, dictionary file does not exist.")
-  exit(0)
-lines = file.readlines()
-for line in range(len(lines)): #This strips the lines and removes any empty lines from the list
-  lines[line]=lines[line].strip()
-  if lines[line] == "":
-    lines.pop(line)
-if len(lines) ==0: #Closes the program if the file is empty.
-  print("Error, file is empty.")
-  exit(0)
+lines = getListFromFile()
 
 #Option to provide a blacklist file
 blacklist = ""
@@ -83,19 +88,8 @@ while blacklist != "y" and blacklist != "n":
     print("Error, please select 'y' or 'n' (case-insensitive)\n")
     continue
   if blacklist == "y":
-    try:
-      wordstoRemove = open(inputCheck("Enter blacklist filename: ",check=False)).readlines()
-    except:
-      print("Error, blacklist file does not exist.")
-      exit()
-    for line in range(len(wordstoRemove)):  # This strips the lines and removes any empty lines from the list
-      wordstoRemove[line] = wordstoRemove[line].strip()
-      if wordstoRemove[line] == "":
-        wordstoRemove.pop(line)
-    if len(wordstoRemove) == 0:  # Closes the program if the file is empty.
-      print("Error, file is empty.")
-      exit(0)
-    lines = removeBlacklistedWords(wordstoRemove, lines)
+    blacklistLines = getListFromFile()
+    lines = removeBlacklistedWords(blacklistLines, lines)
 
 
 #Gets input for the start word. Creates a list of words from the values of 'lines' that have a length the same as the length of the start word (after they have been stripped of '\n'). Also obtains input from the target word.
