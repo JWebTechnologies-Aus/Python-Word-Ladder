@@ -9,7 +9,7 @@ def inputCheck(prompt="",check=True):
             print("Error, no input given\n")
             continue
         if not text.isalpha() and check:
-            print("Error, cannot include numbers or punctuation\n")
+            print("Error, cannot include numbers or punctuation.\n")
             continue
         break
     return text
