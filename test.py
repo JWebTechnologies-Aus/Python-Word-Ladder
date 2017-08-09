@@ -83,7 +83,6 @@ def find(word, words, seen, target, path):
     if find(item, words, seen, target, path):
       return path
     path.pop()
-import sys
 
 class TestFileNameInputAndHandling(unittest.TestCase):
     def test_invalidFile(self):

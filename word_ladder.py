@@ -115,12 +115,33 @@ while True:
       print("Error, that word is not in my dictionary.\n")
   break
 
+allpaths = ""
+while allpaths != "y" and allpaths != "n":
+  allpaths = input("Would you like to generate a set of all possible unique paths? ").lower()
+  if allpaths != "y" and allpaths != "n":
+    print("Error, please select 'y' or 'n' (case-insensitive)\n")
+    continue
+  allpaths = allpaths == "y"
+  break
+print(allpaths)
 count = 0
 path = [start]
 seen = {start : True}
-if find(start, words, seen, target, path):
-  path.append(target)
-  print(len(path) - 1, path)
+
+while True:
+  path=[start]
+  seen = {start : True}
+  if find(start, words, seen, target, path):
+    path.append(target)
+    print(len(path) - 1, path)
+  else:
+    print("No More Paths")
+    break
+  if not allpaths:
+    break
+  for word in path:
+    if word in words and word != start and word != target:
+      words.remove(word)
 else:
   print("No path found")
 
