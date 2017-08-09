@@ -113,17 +113,18 @@ while True:
       print("Error, the target word must be the same length as the start word (", len(start), "letters ).\n")
     elif target not in words:
       print("Error, that word is not in my dictionary.\n")
+    break
   break
 
 allpaths = ""
-while allpaths != "y" and allpaths != "n":
-  allpaths = input("Would you like to generate a set of all possible unique paths? ").lower()
-  if allpaths != "y" and allpaths != "n":
-    print("Error, please select 'y' or 'n' (case-insensitive)\n")
+while allpaths != "all" and allpaths != "single":
+  allpaths = input("Would you like to generate a set of all possible unique paths or the shortest single path (type 'all' or 'single') ? ").lower()
+  if allpaths != "all" and allpaths != "single":
+    print("Error, please select 'all' or 'single' (case-insensitive)\n")
     continue
-  allpaths = allpaths == "y"
+  allpaths = allpaths == "all"
   break
-print(allpaths)
+
 count = 0
 path = [start]
 seen = {start : True}
@@ -131,17 +132,25 @@ seen = {start : True}
 while True:
   path=[start]
   seen = {start : True}
-  if find(start, words, seen, target, path):
+  pathfound = find(start, words, seen, target, path)
+  if pathfound:
     path.append(target)
     print(len(path) - 1, path)
-  else:
-    print("No More Paths")
+  elif not pathfound and not allpaths:
+    print("No Paths Found")
+    break
+  elif (not pathfound and allpaths):
+    print("No more paths")
     break
   if not allpaths:
     break
   for word in path:
     if word in words and word != start and word != target:
       words.remove(word)
+    if len(path) - 1 <= 1:
+      words.remove(word)
+  if len(path) - 1 <= 1:
+    print("This is a special case. The target can be achieved in one step. Below are all technically paths")
 else:
   print("No path found")
 
