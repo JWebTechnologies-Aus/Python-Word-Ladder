@@ -41,7 +41,7 @@ def removeBlacklistedWords(blacklist, lines):
 
 #This function takes two strings. It generates a list of all the individual characters that occur in the same position in each string. It then returns the length of that list. Thus it compares the similarity between the current step in the word ladder and the final target.
 def same(item, target):
-  return len([i for (i, t) in zip(item, target) if i == t])
+  return len([i for (, t) in zip(item, target) if c == t])
 
 
 #This function generates a list of words from the dictionary matching a pattern given to it in the form of a string. A ‘.’ character is used to denote a wild card (meaning it can be any character).
@@ -52,15 +52,14 @@ def build(pattern, words, seen, list):
 
 def find(word, words, seen, target, path):
   list = []
-  fixedIndexes=[]
-
-  if same(word,target) > 0:
-    for i in range(len(target)): #This loop is responsible for fixing letters in place if they match the target word
-      if path[-1][i] == target[i]:
-        fixedIndexes.append(i)
-  for i in range(len(word)):
-    if i not in fixedIndexes:
-      list += build(word[:i] + "." + word[i + 1:], words, seen, list)
+  commonletters =[c for (c, t) in zip(word, target) if c == t]
+  # if same(word,target) > 0:
+  #   for i in range(len(target)): #This loop is responsible for fixing letters in place if they match the target word
+  #     if path[-1][i] == target[i]:
+  #       fixedIndexes.append(i)
+  # for i in range(len(word)):
+  #   if i not in fixedIndexes:
+  #     list += build(word[:i] + "." + word[i + 1:], words, seen, list)
   if len(list) == 0:
     return False
   list = sorted([(same(w, target), w) for w in list], reverse=True)
@@ -127,14 +126,16 @@ while allpaths != "all" and allpaths != "single":
   break
 
 count = 0
+path = [start]
+seen = {start : True}
+
 while True:
   path=[start]
   seen = {start : True}
-  fixedIndexes=[]
   pathfound = find(start, words, seen, target, path)
   if pathfound:
     path.append(target)
-    print(len(path) - 1, " >> ".join(path))
+    print(len(path) - 1, path)
   elif not pathfound and not allpaths:
     print("No Paths Found")
     break
