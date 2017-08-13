@@ -1,155 +1,150 @@
 import re
 
-#This function does the same job as the regular input() function, however it also checks for actual input length and for the presence of letters or numbers (if specified). If the input does not match the requirements, the prompt is looped until it does.
 def inputCheck(prompt="",check=True):
     text = None
     while True:
-        text = input(prompt)
-        if len(text) == 0:
+        text = input(prompt) #Get input from user.
+        if len(text) == 0: #Check that the input given was not an empty string.
             print("Error, no input given\n")
             continue
-        if not text.isalpha() and check:
+        if not text.isalpha() and check: #Check that the line has no numbers or punctuation (if this option is selected via the parameters - True by default)
             print("Error, cannot include numbers or punctuation.\n")
             continue
         break
     return text
 
-#This function gets input for a file name/path, iterates through all the lines in the file and appends them to a list. The list is then returned. All relevant error handling is done within this function.
 def getListFromFile():
   try:
-    file = open(inputCheck("Enter dictionary name: ", check=False))
-  except:
+    file = open(inputCheck("Enter dictionary name: ", check=False)) #Get input for file name.
+  except: #File is not found - this is checked to be raised in unittesting.
     print("Error, dictionary file does not exist.")
     exit(0)
-  lines = file.readlines()
-  for line in range(len(lines)):  # This strips the lines and removes any empty lines from the list
-    lines[line] = lines[line].strip()
+  lines = file.readlines() #Returns a list of all the lines in the files.
+  for line in range(len(lines)):
+    lines[line] = lines[line].strip() #Remove any white space or special characters from the line ends.
     if lines[line] == "":
-      lines.pop(line)
-  if len(lines) == 0:  # Closes the program if the file is empty.
+      lines.pop(line) #Remove the line if it is empty.
+  if len(lines) == 0:
     print("Error, file is empty.")
-    exit(0)
+    exit(0) #Closes the program if the file is empty.
   return lines
 
-#TThis function takes two lists. It iterates over each item of the first list and if that item occurs in the second list, it is removed from the second list.
-def removeBlacklistedWords(blacklist, lines):
-  for word in blacklist:
-    if word in lines:
-      lines.remove(word)
-  return lines
-
-
-#This function takes two strings. It generates a list of all the individual characters that occur in the same position in each string. It then returns the length of that list. Thus it compares the similarity between the current step in the word ladder and the final target.
 def same(item, target):
-  return len([i for (i, t) in zip(item, target) if i == t])
+  return len([itemLetter for (itemLetter, targetLetter) in zip(item, target) if itemLetter == targetLetter]) #Takes two strings, generates a list of all the individual characters that occur in the same position in each string and returns the length of that list (ie. how similar the word is to the final target.
 
-
-#This function generates a list of words from the dictionary matching a pattern given to it in the form of a string. A ‘.’ character is used to denote a wild card (meaning it can be any character).
-def build(pattern, words, seen, list):
-  return [word for word in words
-          if re.search(pattern, word) and word not in seen.keys() and
-                    word not in list]
+def build(pattern, words, seen, potentialNextWords):
+  return [word for word in words if re.search(pattern, word) and word not in seen.keys() and word not in potentialNextWords] #Generates a list of words from the dictionary matching a pattern given to it in the form of a string. A ‘.’ character is used to denote a wild card (meaning it can be any character).
 
 def find(word, words, seen, target, path):
-  list = []
-  fixedIndexes=[]
-
-  if same(word,target) > 0:
-    for i in range(len(target)): #This loop is responsible for fixing letters in place if they match the target word
-      if path[-1][i] == target[i]:
-        fixedIndexes.append(i)
-  for i in range(len(word)):
-    if i not in fixedIndexes:
-      list += build(word[:i] + "." + word[i + 1:], words, seen, list)
-  if len(list) == 0:
+  potentialNextWords = []
+  fixedIndexes=[i for i in range(len(word)) if word[i] == target[i]] #Generates a list of indexes in which there is a matching letter for both the current word and the target word.
+  for i in [index for index in range(len(word)) if index not in fixedIndexes]: #Iterating through a list of indexes of the current word that are NOT IN fixedIndexes.
+    potentialNextWords += build(word[:i] + "." + word[i + 1:], words, seen, potentialNextWords) #Building a list of the potentialNextWords while ignoring the indexes that in fixedIndexes.
+  if len(potentialNextWords) == 0: #End the function (and all its recursions) with a negative return statement if there are no more potential next words
     return False
-  list = sorted([(same(w, target), w) for w in list], reverse=True)
-  for (match, item) in list:
-    #Match shows how many letters are in the current word (item) that are shared with the final word. It is appended if it is the equivalent of all letters - 1
+  potentialNextWords = sorted([(same(word, target), word) for word in potentialNextWords], reverse=True) #Generate a list of tuples - containing the potenial next words and their similarity to the target word (match). Ordered with most similar words first.
+  for (match, item) in potentialNextWords: #End the function (and all its recursions) with a positive return statement if the potentialNextWords list has a word that can be the final step before the target word OR the target word itself.
     if match >= len(target) - 1:
       if match == len(target) - 1:
-        path.append(item)
+        path.append(item) #If the potentialNextWords does NOT contain the target, but a word that can be the final one before the target, append the word to the path before stopping the function.
       return True
-    seen[item] = True
-  for (match, item) in list:
+    seen[item] = True #If function is not ended, add each word in potentialNextWords to the seen dictionary.
+  for (match, item) in potentialNextWords: #Iterate through the list of potentialNextWords, add each item to the path before recursively running find(). If a path is found, return True and print the path. If not, remove the word and try again with the next one.
     path.append(item)
     if find(item, words, seen, target, path):
       return True
     path.pop()
 
+##############################
+### Beginning of main code ###
+##############################
 
-#Open and read file. All words are on a separate line, ie. each line is a single word. Hence the variable 'lines' will contain a list of single words ending in '\n'.
-lines = getListFromFile()
+masterDictionary = getListFromFile()
+originalSeen = {}
 
-#Option to provide a blacklist file
-blacklist = ""
-while blacklist != "y" and blacklist != "n":
-  blacklist = input("Would you like to provide a blacklist dictionary (Y/N)? ").lower()
+#Get input for blacklisting functionality.
+while True:
+  blacklist = input("Would you like to provide a blacklist dictionary (Y/N)? ").lower() #Option to provide blacklist dictionary file.
   if blacklist != "y" and blacklist != "n":
     print("Error, please select 'y' or 'n' (case-insensitive)\n")
     continue
   if blacklist == "y":
-    blacklistLines = getListFromFile()
-    lines = removeBlacklistedWords(blacklistLines, lines)
-
-
-#Gets input for the start word. Creates a list of words from the values of 'lines' that have a length the same as the length of the start word (after they have been stripped of '\n'). Also obtains input from the target word.
-while True:
-  words = []
-  start=""
-  while start not in words: #Loop to ensure start word is in the dictionary.
-    start = inputCheck("Enter start word:").lower() #Must be lowercase in order to compare later.
-    for line in lines:
-      word = line.rstrip()
-      if len(word) == len(start):
-        words.append(word)
-    if start not in words:
-      print("Error, that word is not in my dictionary.\n")
-      words=[]
-  target=""
-  #Input function has been put in a while loop to handle the potential length mismatch error and ensure that the target word is in the dictionary.
-  while len(target) != len(start) or target not in words:
-    target = inputCheck("Enter target word:").lower()
-    if len(target) != len(start):
-      print("Error, the target word must be the same length as the start word (", len(start), "letters ).\n")
-    elif target not in words:
-      print("Error, that word is not in my dictionary.\n")
-    break
+    blacklistDictionary = getListFromFile()
+    for word in blacklistDictionary:
+      originalSeen[word] = True
   break
 
-allpaths = ""
-while allpaths != "all" and allpaths != "single":
-  allpaths = input("Would you like to generate a set of all possible unique paths or the SHORTEST single path (type 'all' or 'single') ? ").lower()
-  if allpaths != "all" and allpaths != "single":
+#Get input for start word
+while True: #Loop to ensure start word is in the dictionary. Uses True, rather than condition so it does not need to evaluate a second time after printing error.
+  start = inputCheck("Enter start word:").lower() 
+  if start not in masterDictionary: #Check that start word is in the dictionary.
+    print("Error, that word is not in my dictionary.\n")
+    continue
+  break
+originalSeen[start] = True
+
+#Get input for target word
+while True:
+  target = inputCheck("Enter target word:").lower()
+  if start == target: #Checks that the start and target word are not the same (does this first because it is the quickest comparison).
+    print("Error, please choose a different word. Target cannot be the same as start.\n")
+    continue  
+  elif len(target) != len(start): #Checks that the length of both words match.
+    print("Error, the target word must be the same length as the start word (", len(start), "letters ).\n")
+    continue
+  elif target not in masterDictionary: #Checks that the target word is in the dictionary (does this last because it takes the longest to evaluate).
+    print("Error, that word is not in my dictionary.\n")
+    continue
+  break
+
+words = [word for word in masterDictionary if len(word) == len(start)] #Generates working dictionary (list of words in the dictionary that match the length of the start and target words).
+
+#Get input for what the user wants to find (optimal path, ALL unique paths or single SHORTEST path).
+shortestPath=False
+while True:
+  allpaths = input("Would you like to generate a single (OPTIMAL) path, a set of ALL possible unique paths or the SHORTEST path NOTE: the final two options will take longer (type 'optimal','all' or 'shortest') ? ").lower()
+  if allpaths != "all" and allpaths != "optimal" and allpaths != "shortest": #Check that input is valid. Only two possible inputs accepted (case insensitive) - 'all' or 'single'.
     print("Error, please select 'all' or 'single' (case-insensitive)\n")
     continue
+  if allpaths == "shortest":
+    print("Beware: This process may take some time (in some cases) because I need to examine ALL unique posibilities. To find a the quickest single path, much faster, use the 'single' option for the OPTIMAL path. In some cases this may also be the shortest.") #Message to warn user that the process may take time to ensure the SHORTEST path is given. This time may vary.
+    shortestPath = True
   allpaths = allpaths == "all"
   break
 
-count = 0
+#Run the find() function to find all paths (or just the shortest).
+if shortestPath: #Only initialize this variable when looking at the shortest paths.
+  minPath=None
+
 while True:
-  path=[start]
-  seen = {start : True}
-  fixedIndexes=[]
-  pathfound = find(start, words, seen, target, path)
-  if pathfound:
+  path = [start]
+  seen = originalSeen.copy()
+  pathfound = find(start, words, seen, target, path) #Obtain path, and get boolean depending on if the process is successful or not.
+  if pathfound and not shortestPath: #Print the path and its length if it can be found.
     path.append(target)
-    print(len(path) - 1, " >> ".join(path))
-  elif not pathfound and not allpaths:
-    print("No Paths Found")
+    print(len(path) - 1, " >> ".join(path), "\n")
+  elif shortestPath and pathfound: #If looking for shortest path, just append the paths to the paths array
+    path.append(target)
+    if pathfound and (minPath == None or len(path) -1 < len(minPath)): #Keep shortest path in memory and check it against the latest path. Replace if it is shorter.
+      minPath= path
+  elif not pathfound: #Print 'No path found' if only looking for single path and cannot find one or shortest path if desired.
+    if allpaths:
+      print("No more paths")
+    elif shortestPath: #Print the shortest path when no more paths can be found.
+      if minPath == None:
+        print("No path found")
+        break
+      print(len(minPath) - 1, " >> ".join(minPath)) #Print the length of the shortest path and the path
+    else:
+      print("No path found")
     break
-  elif (not pathfound and allpaths):
-    print("No more paths")
+  if not allpaths and not shortestPath: #Break out of the loop (and end program) if only looking for a single path (the single OPTIMAL path).
     break
-  if not allpaths:
+  if len(path) <= 2: #Warns that the path only has one step and terminates the program. NOTE: this will only be reached if the user is trying to find all paths.
+    print("This is a special case. The target can be achieved in one step. Whilst there may technically be more paths, they will not be shown. \n")
     break
-  for word in path:
-    if word in words and word != start and word != target:
-      words.remove(word)
-    if len(path) - 1 <= 1:
-      words.remove(word)
-  if len(path) - 1 <= 1:
-    print("This is a special case. The target can be achieved in one step. Below are all technically paths")
-else:
-  print("No path found")
+  for word in path: #Adds all words in the path into the dictionary (originalSeen) that the seen dictionary for each iteration is copied from - this is how it finds all UNIQUE paths.
+    originalSeen[word] = True
+
+
 
