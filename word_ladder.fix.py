@@ -41,7 +41,7 @@ def removeBlacklistedWords(blacklist, lines):
 
 #This function takes two strings. It generates a list of all the individual characters that occur in the same position in each string. It then returns the length of that list. Thus it compares the similarity between the current step in the word ladder and the final target.
 def same(item, target):
-  return len([i for (, t) in zip(item, target) if c == t])
+  return len([i for (c, t) in zip(item, target) if c == t])
 
 
 #This function generates a list of words from the dictionary matching a pattern given to it in the form of a string. A ‘.’ character is used to denote a wild card (meaning it can be any character).
