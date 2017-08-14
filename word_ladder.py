@@ -104,10 +104,10 @@ shortestPath=False
 while True:
   allpaths = input("Would you like to generate a single (OPTIMAL) path, a set of ALL possible unique paths or the SHORTEST path NOTE: the final two options will take longer (type 'optimal','all' or 'shortest') ? ").lower()
   if allpaths != "all" and allpaths != "optimal" and allpaths != "shortest": #Check that input is valid. Only two possible inputs accepted (case insensitive) - 'all' or 'single'.
-    print("Error, please select 'all' or 'single' (case-insensitive)\n")
+    print("Error, please select 'optimal', 'single' or 'all' (case-insensitive)\n")
     continue
   if allpaths == "shortest":
-    print("Beware: This process may take some time (in some cases) because I need to examine ALL unique posibilities. To find a the quickest single path, much faster, use the 'single' option for the OPTIMAL path. In some cases this may also be the shortest.") #Message to warn user that the process may take time to ensure the SHORTEST path is given. This time may vary.
+    #print("Beware: This process may take some time (in some cases) because I need to examine ALL unique posibilities. To find a the quickest single path, much faster, use the 'single' option for the OPTIMAL path. In some cases this may also be the shortest.") #Message to warn user that the process may take time to ensure the SHORTEST path is given. This time may vary.
     shortestPath = True
   allpaths = allpaths == "all"
   break
