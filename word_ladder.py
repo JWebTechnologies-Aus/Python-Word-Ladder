@@ -1,3 +1,15 @@
+''''
+Word Ladder Generation Tool. 
+(word_ladder.py)
+ 
+Modified by: Jake Jones, Ashman Malik
+Author: Unknown
+ 
+The goal of this project was to repair an undocumented python program (word_ladder.py) that was used to generate a word ladder based on words in a provided dictionary file (such that each word produced differs from the previous one on the ladder by one letter, connecting a specified start word to a finish word. The original author of this code is unknown.
+ 
+Details and descriptions of code can be found in the accompanying documentation file (word_ladder_documentation.doc).
+'''
+
 import re
 
 def inputCheck(prompt="",check=True):
@@ -107,7 +119,7 @@ while True:
     print("Error, please select 'optimal', 'single' or 'all' (case-insensitive)\n")
     continue
   if allpaths == "shortest":
-    #print("Beware: This process may take some time (in some cases) because I need to examine ALL unique posibilities. To find a the quickest single path, much faster, use the 'single' option for the OPTIMAL path. In some cases this may also be the shortest.") #Message to warn user that the process may take time to ensure the SHORTEST path is given. This time may vary.
+    print("Beware: This process may take some time (in some cases) because I need to examine ALL unique posibilities. To find a the quickest single path, much faster, use the 'single' option for the OPTIMAL path. In some cases this may also be the shortest.") #Message to warn user that the process may take time to ensure the SHORTEST path is given. This time may vary.
     shortestPath = True
   allpaths = allpaths == "all"
   break
