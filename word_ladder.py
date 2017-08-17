@@ -31,7 +31,7 @@ def getListFromFile():
   except: #File is not found - this is checked to be raised in unittesting.
     print("Error, dictionary file does not exist.")
     exit(0)
-  lines = file.readlines() #Returns a list of all the lines in the files.
+  lines = file.readlines() #Returns a list of all the lines in the file.
   for line in range(len(lines)):
     lines[line] = lines[line].strip() #Remove any white space or special characters from the line ends.
     if lines[line] == "":
@@ -125,7 +125,7 @@ while True:
   break
 
 #Run the find() function to find all paths (or just the shortest).
-if shortestPath: #Only initialize this variable when looking at the shortest paths.
+if shortestPath: #Only initialize this variable when looking at the shortest path.
   minPath=None
 
 while True:

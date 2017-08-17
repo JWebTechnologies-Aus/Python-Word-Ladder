@@ -1,10 +1,10 @@
 ''''
-Word Ladder Generation Tool Unit Testing Program (v1.0). 
+Word Ladder Generation Tool Unit Testing Program (v2.0). 
 
 Author(s): Jake Jones
 Note: this program uses a test dictionary (gameWords) only containing 4 letter words for efficiency purposes.
  
-This code performs 18 unit tests on the main code, which has been included in this file (rather than importing it) so it can be slightly modified for testing purposes. All changes made have been described.
+This code performs 18 unit tests on the main code, which has been included in this file (rather than importing it) so that it can be slightly modified for testing purposes. All changes made have been described.
 
 Original source file: word_ladder.py
  
@@ -15,20 +15,8 @@ Details and descriptions of test cases can be found in the accompanying document
 ##################################
 ## Initializing Testing Program ##
 ##################################
-
-
 import unittest
 import re
-#To generate a list of words from the game dictionary for testing, as all testing words will have 4 letters, only these are imported.
-gameWords=[]
-try:
-    for line in open("dictionary.txt"):
-        line = line.strip()
-        if len(line) == 4:
-            gameWords.append(line)
-except:
-    print("Error, dictionary.txt is required for this testing program to run. Ensure that it is located in the same directory as test.py")
-
 
 #################################
 ## Beginning of Code Functions ##
@@ -141,20 +129,33 @@ class TestMatchingWordsListBuilder(unittest.TestCase):
         self.assertEqual(build('.est', ['test','assert','best'],{},['test']),['best'])
 
 class TestFindingPaths(unittest.TestCase):
+    def setUp(self):
+        #Only words with 4 letters will be tested (to save memory space and minimize resource usage). Hence the self.gameWords variable will contain a list of 4 letter words from the dictionary.
+        self.gameWords=[]
+        try:
+            fhandle = open("dictionary.txt")
+            for line in fhandle:
+                if len(line) == 5:
+                    line = line.strip()
+                    self.gameWords.append(line)
+            fhandle.close()
+        except:
+            print("Error, dictionary.txt is required for this testing program to run fully. Ensure that it is located in the same directory as test.py")
+
     def test_correctPathFound1(self):
-        self.assertEqual((find('lead', gameWords, {'lead':True},'gold', ['lead'])), ['lead', 'load', 'goad'])
+        self.assertEqual((find('lead', self.gameWords, {'lead':True},'gold', ['lead'])), ['lead', 'load', 'goad'])
 
     def test_correctPathFound2(self):
-        self.assertEqual((find('hide', gameWords, {'hide':True},'seek', ['hide'])), ['hide', 'side', 'site', 'sits', 'sies', 'sees'])
+        self.assertEqual((find('hide', self.gameWords, {'hide':True},'seek', ['hide'])), ['hide', 'side', 'site', 'sits', 'sies', 'sees'])
 
     def test_correctPathFoundOneStep(self):
-        self.assertEqual((find('hide', gameWords, {'hide':True},'ride', ['hide'])), ['hide'])
+        self.assertEqual((find('hide', self.gameWords, {'hide':True},'ride', ['hide'])), ['hide'])
 
     def test_correctPathFoundNoPath(self):
-        self.assertEqual((find('asfd', gameWords, {'asfd':True},'xxxx', ['asfd'])), False)
+        self.assertEqual((find('asfd', self.gameWords, {'asfd':True},'xxxx', ['asfd'])), False)
 
     def test_correctPathFoundStartEqualsMatch(self):
-        self.assertEqual(find('lead', gameWords, {'lead':True},'lead', ['lead']), False)
+        self.assertEqual(find('lead', self.gameWords, {'lead':True},'lead', ['lead']), False)
 
 if __name__ == '__main__':
     unittest.main()
