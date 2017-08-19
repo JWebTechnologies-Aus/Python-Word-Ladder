@@ -1,0 +1,200 @@
+commit f30e8d3232cf90ae555600f11afc5661211c5421 (HEAD -> refs/heads/master, refs/remotes/origin/master, refs/remotes/origin/HEAD)
+Author: Ashman Malik <ashman.malik@outlook.com>
+Date:   Fri Aug 18 15:38:23 2017 +1000
+
+    Updated documentation
+
+commit 736277c776037baa2c4b67de58c7edcff4bdb5fd
+Author: Ashman Malik <ashman.malik@outlook.com>
+Date:   Fri Aug 18 15:35:54 2017 +1000
+
+    Updated the documentation with Datastructures
+
+commit e4081d1a5c25572bf71f3f31bfe3abb6e626f23a
+Author: Jake <j.hashim-jones@griffith.edu.au>
+Date:   Fri Aug 18 11:13:24 2017 +1000
+
+    Updated Documentation.
+
+commit 422ca60fff698ea22ff25aa55bfbc291f752198a
+Author: Jake <j.hashim-jones@griffith.edu.au>
+Date:   Thu Aug 17 13:51:35 2017 +1000
+
+    Updates test.py. Now runs far more efficiently. Test.py is finalized.
+
+commit 2c430c73e7e2981b3d481a2d121957ddad656f4d
+Author: Jake <j.hashim-jones@griffith.edu.au>
+Date:   Wed Aug 16 01:20:46 2017 -0400
+
+    Updated test case file (final version). Updated documentation.
+
+commit 468afbe45646825e36ffa3a246ee783b900e1a56
+Author: Ashman Malik <ashman.malik@outlook.com>
+Date:   Wed Aug 16 10:40:17 2017 +1000
+
+    User Instructions updated and made concise, Added Datastructures to the file
+
+commit 5b2db3ceab1ae4baa5203839c97c47e1462a4493
+Author: Jake <j.hashim-jones@griffith.edu.au>
+Date:   Mon Aug 14 13:50:32 2017 +1000
+
+    Trimmed User Instructions.
+
+commit 63d143ec186751da82a76ba88570e833621f6caf
+Author: Jake <j.hashim-jones@griffith.edu.au>
+Date:   Mon Aug 14 13:36:19 2017 +1000
+
+    Uploading feedback on user instructions in documentation. Solid effort!
+
+commit c41b68e61c0680e020ea8ea97b212c4dfe7a5fd8
+Author: Ashman Malik <ashman.malik@outlook.com>
+Date:   Mon Aug 14 13:09:00 2017 +1000
+
+    Updated the List of data structures and User instructions
+
+commit 9489f7913c8f0e524c806e0d53dc1f04aa79ca5f
+Author: Ashman Malik <ashman.malik@outlook.com>
+Date:   Mon Aug 14 12:28:17 2017 +1000
+
+    Error Fixed with different Exceptions
+
+commit 37bacf3f5d790b63f5f2e31c5107bcf67b7503cd
+Merge: 18a312b e4b5ab9
+Author: Jake <j.hashim-jones@griffith.edu.au>
+Date:   Sun Aug 13 20:11:32 2017 +1000
+
+    merging
+
+commit 18a312b0f07c37abc11df056a4f0f49a2853b9b9
+Author: Jake <j.hashim-jones@griffith.edu.au>
+Date:   Sun Aug 13 20:07:01 2017 +1000
+
+    Remove word_ladder.fix.py (junk file)
+
+commit e4b5ab96ce2d8fe0a888c20db23d74a82b5ccbc3
+Author: Ashman Malik <ashman.malik@outlook.com>
+Date:   Sun Aug 13 19:39:58 2017 +1000
+
+    Fixed the Code
+
+commit 7704c605ea3878e511754a304f97aff9397627b9
+Author: Jake <j.hashim-jones@griffith.edu.au>
+Date:   Sun Aug 13 15:56:15 2017 +1000
+
+    Updated documentation to include new functionality. Still need to fix high level block diagram.
+
+commit b607f2a90ccd56027d5a0389239a7440c939706a
+Author: Jake <j.hashim-jones@griffith.edu.au>
+Date:   Sun Aug 13 15:38:47 2017 +1000
+
+    Final code annotations and fixes. Added functionality to find the shortest path.
+
+commit de5e79dcc40090db3313dcccb08c60f5dc9441d5
+Author: Jake <j.hashim-jones@griffith.edu.au>
+Date:   Sat Aug 12 17:53:52 2017 +1000
+
+    Remove temporary files
+
+commit 52edfdbfa1935996c76e28f3eb5e746d12c9d381
+Author: Jake <j.hashim-jones@griffith.edu.au>
+Date:   Sat Aug 12 17:50:25 2017 +1000
+
+    Added high level block diagram to documentation
+
+commit e146a5a2ba384e61312805b8bab8269f8a0017dd
+Merge: 8446779 dfba7e7
+Author: Jake <j.hashim-jones@griffith.edu.au>
+Date:   Sat Aug 12 17:44:51 2017 +1000
+
+    Adding high level block diagram files to repository (resynching first)
+    Merge branch 'master' of https://github.com/JakeJones161096/Python-Word-Ladder
+
+commit 8446779b37cc3a466b20d28605e3d2e6666e3a5e
+Author: Jake <j.hashim-jones@griffith.edu.au>
+Date:   Sat Aug 12 17:43:31 2017 +1000
+
+    Adding high level block diagram files
+
+commit dfba7e79ffe992a8dd51600b62ac17f2d82e56ba
+Author: Ashman Malik <ashman.malik@outlook.com>
+Date:   Wed Aug 9 17:34:28 2017 +1000
+
+    User requirements are completed and acceptance testing as well
+
+commit 87dafb6a44c2123d9c60ddaafbd4b9843291effe
+Author: Jake <j.hashim-jones@griffith.edu.au>
+Date:   Wed Aug 9 00:52:36 2017 -0400
+
+    Updated word_ladder.py tweaks. Still will be commented in greater detail.
+
+commit 344ff1799fe74e67ee361d45cf5419273f745b17
+Author: Jake <j.hashim-jones@griffith.edu.au>
+Date:   Tue Aug 8 23:51:39 2017 -0400
+
+    Added potential solution for printing all unique paths (or the shortest path). Will still need tweaking.
+
+commit 73998bfcf21fa925520b5bab00e6c6281d2010bd
+Author: Jake <j.hashim-jones@griffith.edu.au>
+Date:   Mon Aug 7 18:01:25 2017 +1000
+
+    Added fully functional unit test program. Updated the documentatioin.
+
+commit abeb6cad4d819ad0bee5b57d9addb93b3aa3bc98
+Author: Jake <j.hashim-jones@griffith.edu.au>
+Date:   Sat Aug 5 17:37:19 2017 +1000
+
+    Added dictionary and sample blacklist dictionary files. Moved all filename input and file processing to getListFromFile() function. Updated documentation
+
+commit 88defd3544f4229aae498ad48f2a58da036b3608
+Author: Jake <j.hashim-jones@griffith.edu.au>
+Date:   Wed Aug 2 18:57:59 2017 +1000
+
+    Updated documentation. Updated software commentary
+
+commit 0de92bee3b24b1411da7f87a5ab46107e1aa6b38
+Author: Jake <j.hashim-jones@griffith.edu.au>
+Date:   Wed Aug 2 17:51:35 2017 +1000
+
+    Uploading documentation file - word_ladder_documentation.doc
+
+commit 90ce09621f55925047b343dab6665c34d0fa5df6
+Author: Jake <j.hashim-jones@griffith.edu.au>
+Date:   Tue Aug 1 16:12:36 2017 +1000
+
+    Updating the readme file to include a reference to the doccumentation
+
+commit bf57dc04917fe84c3421e31f6a2c39a6a52fff5e
+Author: JakeJones161096 <30583853+JakeJones161096@users.noreply.github.com>
+Date:   Mon Jul 31 17:01:06 2017 +1000
+
+    Added blacklisting functionality (including adding removeBlacklistedWords function). Further code tidy up.
+
+commit 0d784dc87b6b4bdec0a49aaf939172f5e897ba5b
+Author: JakeJones161096 <30583853+JakeJones161096@users.noreply.github.com>
+Date:   Mon Jul 31 16:31:31 2017 +1000
+
+    Tidied up code. Implemented fixes to functionality. Added all error handling (including adding inputCheck function).
+
+commit 70612e5c4a1aa1dfebd3b1e19d5b7075dd3e62a0
+Author: JakeJones161096 <30583853+JakeJones161096@users.noreply.github.com>
+Date:   Mon Jul 31 13:43:59 2017 +1000
+
+    Added comments to wordlist.py and added some potential fixes to functionality (to-be-removed)
+
+commit d9b7cd4b4fc1fb3a2f98c64004c25ee1d368733d
+Author: JakeJones161096 <30583853+JakeJones161096@users.noreply.github.com>
+Date:   Mon Jul 31 13:43:24 2017 +1000
+
+    Rename word_ladder.py to word_ladder(original).py
+
+commit 723924df0a34a0176177f1beb35188617c04b5b9
+Author: JakeJones161096 <30583853+JakeJones161096@users.noreply.github.com>
+Date:   Mon Jul 31 13:38:25 2017 +1000
+
+    Uploading original word_ladder.py file to master repository.
+
+commit 643f0c57df2b85e8deaa1ccaf56b1d871721a987
+Author: Unknown <j.hashim-jones@griffith.edu.au>
+Date:   Mon Jul 31 13:32:01 2017 +1000
+
+    Initial commit
